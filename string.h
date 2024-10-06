@@ -13,3 +13,4 @@ String NewString(const char *p);
 int String__FindChar(String *s, const char ch);
 int String__CountChar(String *s, const char ch);
 int String__Trim(String *s, const char ch);
+void String__ReplaceChar(String *s, const char ch, const char *data);

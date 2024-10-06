@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "String.h"
+#include "string.h"
 
 String NewString(const char *p) {
 	if(!p)
@@ -72,3 +72,33 @@ int String__Trim(String *s, const char ch) {
 
 	return 1;
 }
+
+void String__ReplaceChar(String *s, const char ch, const char *data) {
+	char *new = (char *)malloc(s->idx);
+	int idx = 0;
+
+	for(int i = 0; i < s->idx; i++) {
+		if(!s->data[i])
+			break;
+
+		if(s->data[i] == ch) {
+			for(int chr = 0; chr < strlen(data); chr++) {
+				new[idx] = data[chr];
+				idx++;
+				if((i + chr) > s->idx)
+					new = (char *)realloc(new, idx + 1);
+			}
+		}
+
+		new[idx] = s->data[i];
+		idx++;
+		if(i > s->idx)
+			new = (char *)realloc(new, idx + 1);
+	}
+
+	new[idx] = '\0';
+	free(s->data);
+	s->data = new;
+	s->idx = strlen(new);
+}
+
