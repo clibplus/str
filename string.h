@@ -82,3 +82,8 @@ int 		String__FindString(String *s, const char *data);
 //			| - > Return the substr position or -1 upon failures
 //
 int 		String__FindStringAt(String *s, const char *data, int match_count);
+
+//
+//			| - > Destruct the String struct
+//
+void 		DestroyString(String *s);

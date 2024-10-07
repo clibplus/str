@@ -232,3 +232,13 @@ int String__FindStringAt(String *s, const char *data, int match_count) {
 
 	return -1;
 }
+
+void DestroyString(String *s) {
+	if(s->data) {
+		free(s->data);
+		s->data = NULL;
+	}
+
+	free(s);
+	s = NULL;
+}
