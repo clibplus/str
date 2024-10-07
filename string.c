@@ -14,7 +14,9 @@ String NewString(const char *p) {
 
 		.FindChar		= String__FindChar,
 		.CountChar		= String__CountChar,
-		.Trim			= String__Trim
+		.Trim			= String__Trim,
+
+		.AppendString	= String__AppendString
 	};
 
 	return s;
@@ -26,6 +28,22 @@ int String__FindChar(String *s, const char ch) {
 			break;
 
 		if(s->data[i] == ch)
+			return i;
+	}
+
+	return -1;
+}
+
+int String__FindCharAt(String *s, const char ch, int match_count) {
+	int count = 0;
+	for(int i = 0; i < s->idx; i++) {
+		if(!s->data[i])
+			break;
+
+		if(s->data[i] == ch)
+			count++;
+
+		if(s->data[i] == ch && match_count == i)
 			return i;
 	}
 
@@ -57,8 +75,10 @@ int String__Trim(String *s, const char ch) {
 		if(!s->data[i])
 			break;
 
-		if(s->data[i] == ch)
+		if(s->data[i] == ch) {
+			found = 1;
 			continue;
+		}
 
 		new[idx] = s->data[i];
 		idx++;
@@ -70,7 +90,7 @@ int String__Trim(String *s, const char ch) {
 	s->data = new;
 	s->idx = strlen(new);
 
-	return 1;
+	return found;
 }
 
 void String__ReplaceChar(String *s, const char ch, const char *data) {
@@ -82,7 +102,7 @@ void String__ReplaceChar(String *s, const char ch, const char *data) {
 			break;
 
 		if(s->data[i] == ch) {
-			for(int chr = 0; chr < strlen(data); chr++) {
+			for(int chr = 0; chr < (int)strlen(data); chr++) {
 				new[idx] = data[chr];
 				idx++;
 				if((i + chr) > s->idx)
@@ -101,4 +121,21 @@ void String__ReplaceChar(String *s, const char ch, const char *data) {
 	s->data = new;
 	s->idx = strlen(new);
 }
+
+int String__AppendString(String *s, const char *data) {
+	if(!s)
+		return 0;
+
+	if(!data)
+		return 0;
+
+	for(int i = 0; i < (int)strlen(data); i++) {
+		s->data[s->idx] = data[i];
+		s->idx++;
+		s->data = (char *)realloc(s->data, s->idx + 1);
+	}
+
+	return 1;
+}
+
 
