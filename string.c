@@ -28,6 +28,9 @@ String NewString(const char *p) {
 }
 
 int String__FindChar(String *s, const char ch) {
+	if(!s || !s->data)
+		return -1;
+
 	for(int i = 0; i < s->idx; i++) {
 		if(!s->data[i])
 			break;
@@ -40,6 +43,9 @@ int String__FindChar(String *s, const char ch) {
 }
 
 int String__FindCharAt(String *s, const char ch, int match_count) {
+	if(!s || !s->data)
+		return -1;
+
 	int count = 0;
 	for(int i = 0; i < s->idx; i++) {
 		if(!s->data[i])
@@ -56,6 +62,9 @@ int String__FindCharAt(String *s, const char ch, int match_count) {
 }
 
 int String__CountChar(String *s, const char ch) {
+	if(!s || !s->data)
+		return -1;
+
 	int count = 0;
 	for(int i = 0; i < s->idx; i++) {
 		if(!s->data[i])
@@ -70,7 +79,7 @@ int String__CountChar(String *s, const char ch) {
 }
 
 int String__Trim(String *s, const char ch) {
-	if(!s)
+	if(!s || !s->data)
 		return 0;
 
 	int found = 0, idx = 0;
@@ -141,10 +150,12 @@ int String__StripPos2End(String *s, int idx) {
 	s->idx = new_len;
 	return 1;
 }
+int String__ReplaceChar(String *s, const char ch, const char *data) {
+	if(!s || !s->data)
+		return 0;
 
-void String__ReplaceChar(String *s, const char ch, const char *data) {
 	char *new = (char *)malloc(s->idx);
-	int idx = 0;
+	int idx = 0, found = 0;
 
 	for(int i = 0; i < s->idx; i++) {
 		if(!s->data[i])
@@ -169,13 +180,11 @@ void String__ReplaceChar(String *s, const char ch, const char *data) {
 	free(s->data);
 	s->data = new;
 	s->idx = strlen(new);
+	return found;
 }
 
 int String__AppendString(String *s, const char *data) {
-	if(!s)
-		return 0;
-
-	if(!data)
+	if(!s || !s->data || !data)
 		return 0;
 
 	for(int i = 0; i < strlen(data); i++) {
@@ -187,6 +196,9 @@ int String__AppendString(String *s, const char *data) {
 }
 
 int String__FindString(String *s, const char *data) {
+	if(!s || !s->data || !data)
+		return -1;
+
 	for(int i = 0; i < strlen(data); i++) {
 		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1])
 			return i;
