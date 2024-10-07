@@ -13,6 +13,7 @@ typedef struct String {
 
 	int			(*AppendString)	(struct String *s, const char *data);
 	int			(*FindString)	(struct String *s, const char *data);
+	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);
 } String;
 
 //
@@ -71,7 +72,13 @@ int 		String__StripPos2End(String *s, int idx);
 
 //
 //			| - > Find a substr in the current string
-//			| - > Returns 1 upon sucess or -1 upon failures
+//			| - > Return the substr position or -1 upon failures
 //
 int 		String__FindString(String *s, const char *data);
 
+
+//
+//			| - > Find a substr at the matching the provided match count in the current string
+//			| - > Return the substr position or -1 upon failures
+//
+int 		String__FindStringAt(String *s, const char *data, int match_count);

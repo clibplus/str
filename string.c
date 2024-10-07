@@ -21,7 +21,8 @@ String NewString(const char *p) {
 		.StripFrom2End 	= String__StripPos2End,
 
 		.AppendString	= String__AppendString,
-		.FindString 	= String__FindString
+		.FindString 	= String__FindString,
+		.FindStringAt	= String__FindStringAt
 	};
 
 	return s;
@@ -199,10 +200,37 @@ int String__FindString(String *s, const char *data) {
 	if(!s || !s->data || !data)
 		return -1;
 
-	for(int i = 0; i < strlen(data); i++) {
-		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1])
-			return i;
+	for(int i = 0; i < s->idx; i++) {
+		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1]) {
+			for(int ch = 0; ch < strlen(data); ch++) {
+				if(s->data[i + ch] == data[ch] && ch == (strlen(data)-1)) {
+					return i;
+				}
+			}
+		}
 	}
+	return -1;
+}
+
+int String__FindStringAt(String *s, const char *data, int match_count) {
+	if(!s || !s->data || !data)
+		return -1;
+
+	int matches = 0;
+	for(int i = 0; i < s->idx; i++) {
+		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1]) {
+			for(int ch = 0; ch < strlen(data); ch++) {
+				if(s->data[i + ch] == data[ch] && ch == (strlen(data)-1)) {
+					matches++;
+				}
+			}
+
+			if(matches == match_count)
+				return i;
+		}
+	}
+
+	printf("%d\n", matches);
 
 	return -1;
 }
