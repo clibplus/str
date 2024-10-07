@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "string.h"
 
@@ -16,6 +17,7 @@ String NewString(const char *p) {
 		.FindCharAt		= String__FindCharAt,
 		.CountChar		= String__CountChar,
 		.Trim			= String__Trim,
+		.Strip			= String__Strip,
 
 		.AppendString	= String__AppendString
 	};
@@ -94,6 +96,33 @@ int String__Trim(String *s, const char ch) {
 	return found;
 }
 
+int String__Strip(String *s) {
+	if(!s || !s->data) return 0;
+
+	int start = 0;
+	while(isspace(s->data[start])) start++;
+
+	int end = strlen(s->data) - 1;
+	while(isspace(s->data[end])) end--;
+
+	int new_len = end - start + 2;
+	char *new = (char *)malloc(new_len);
+	if(!new)
+		return 0;
+
+	memset(new, '\0', new_len);
+	for(int i = 0; i < new_len; i++)
+		new[i] = s->data[start + i];
+
+
+	new[strlen(new) - 1] = '\0';
+	free(s->data);
+	s->data = strdup(new);
+	s->idx = strlen(new);
+
+	return 1;
+}
+
 void String__ReplaceChar(String *s, const char ch, const char *data) {
 	char *new = (char *)malloc(s->idx);
 	int idx = 0;
@@ -137,5 +166,3 @@ int String__AppendString(String *s, const char *data) {
 	}
 	return 1;
 }
-
-
