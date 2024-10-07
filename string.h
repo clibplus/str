@@ -19,7 +19,7 @@ typedef struct String {
 //			| - > Create a new intanse of String
 //			| - > Returns the new instanse upon success or NULL upon failures
 //
-String 		NewString(const char *p);
+String		NewString(const char *p);
 
 //
 //			| - > Find a char's position in string
@@ -31,7 +31,7 @@ int			String__FindChar(String *s, const char ch);
 //			| - > Find a character's position matching the amount of matches found of the character
 //			| - > Return the character's position or -1 upon failures
 //
-int String__FindCharAt(String *s, const char ch, int match_count);
+int 		String__FindCharAt(String *s, const char ch, int match_count);
 
 //
 //			| - > Count the amount of matches, matching character provided
@@ -74,3 +74,4 @@ int 		String__StripPos2End(String *s, int idx);
 //			| - > Returns 1 upon sucess or -1 upon failures
 //
 int 		String__FindString(String *s, const char *data);
+
