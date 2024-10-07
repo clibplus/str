@@ -9,10 +9,11 @@ String NewString(const char *p) {
 		return (String){ .data = (char *)malloc(1), .idx = 0 };
 
 	String s = {
-		.data 			= (char *)p,
-		.idx 			= strlen(p),
+		.data 			= (!p ? NULL : strdup(p)),
+		.idx 			= (!p ? 0 : strlen(p)),
 
 		.FindChar		= String__FindChar,
+		.FindCharAt		= String__FindCharAt,
 		.CountChar		= String__CountChar,
 		.Trim			= String__Trim,
 
@@ -129,12 +130,11 @@ int String__AppendString(String *s, const char *data) {
 	if(!data)
 		return 0;
 
-	for(int i = 0; i < (int)strlen(data); i++) {
+	for(int i = 0; i < strlen(data); i++) {
 		s->data[s->idx] = data[i];
 		s->idx++;
 		s->data = (char *)realloc(s->data, s->idx + 1);
 	}
-
 	return 1;
 }
 

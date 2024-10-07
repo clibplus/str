@@ -5,6 +5,7 @@ typedef struct String {
 	long 		idx;
 
 	int 		(*FindChar)		(struct String *s, const char ch);
+	int 		(*FindCharAt)	(struct String *s, const char ch, int match_count);
 	int 		(*CountChar)	(struct String *s, const char ch);
 	int 		(*Trim)			(struct String *s, const char ch);
 
