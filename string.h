@@ -14,8 +14,8 @@ typedef struct String {
 	int			(*AppendString)	(struct String *s, const char *data);
 	int			(*FindString)	(struct String *s, const char *data);
 	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);
-	int			(*GetSubstr)	(struct String *s, int start, int end);
-	int			(*Join)			(struct String *s, const char *arr, const char delim);
+	char		*(*GetSubstr)	(struct String *s, int start, int end);
+	int			(*Join)			(struct String *s, const char **arr, const char delim);
 	int			(*Destruct)		(struct String *s);
 } String;
 
@@ -96,9 +96,9 @@ char 		*String__GetSubstr(String *s, int start, int end);
 //			| - > Add an array of elements to the string with a delim between each element
 //			| - > Returns 1 upon success or 0 upon failures
 //
-int			String__Join(String *s, const char *arr, const char *delim);
+int 		String__Join(String *s, const char **arr, const char delim);
 
 //
 //			| - > Destruct the String struct
 //
-void 		DestroyString(String *s);
+int 		DestroyString(String *s);

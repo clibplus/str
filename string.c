@@ -154,6 +154,7 @@ int String__StripPos2End(String *s, int idx) {
 	s->idx = new_len;
 	return 1;
 }
+
 int String__ReplaceChar(String *s, const char ch, const char *data) {
 	if(!s || !s->data)
 		return 0;
@@ -191,7 +192,7 @@ int String__AppendString(String *s, const char *data) {
 	if(!s || !s->data || !data)
 		return 0;
 
-	for(int i = 0; i < strlen(data); i++) {
+	for(int i = 0; i < (int)strlen(data); i++) {
 		s->data[s->idx] = data[i];
 		s->idx++;
 		s->data = (char *)realloc(s->data, s->idx + 1);
@@ -205,8 +206,8 @@ int String__FindString(String *s, const char *data) {
 
 	for(int i = 0; i < s->idx; i++) {
 		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1]) {
-			for(int ch = 0; ch < strlen(data); ch++) {
-				if(s->data[i + ch] == data[ch] && ch == (strlen(data)-1)) {
+			for(int ch = 0; ch < (int)strlen(data); ch++) {
+				if(s->data[i + ch] == data[ch] && ch == ((int)strlen(data)-1)) {
 					return i;
 				}
 			}
@@ -222,8 +223,8 @@ int String__FindStringAt(String *s, const char *data, int match_count) {
 	int matches = 0;
 	for(int i = 0; i < s->idx; i++) {
 		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1]) {
-			for(int ch = 0; ch < strlen(data); ch++) {
-				if(s->data[i + ch] == data[ch] && ch == (strlen(data)-1)) {
+			for(int ch = 0; ch < (int)strlen(data); ch++) {
+				if(s->data[i + ch] == data[ch] && ch == ((int)strlen(data)-1)) {
 					matches++;
 				}
 			}
@@ -244,7 +245,7 @@ char *String__GetSubstr(String *s, int start, int end) {
 	char *new = (char *)malloc(new_len);
 	for(int i = 0; i < s->idx; i++)
 		if(i > start || i < end)
-			strncat(new, s->data[i], sizeof(char));
+			strncat(new, &s->data[i], sizeof(char));
 
 	new[strlen(new) - 1] = '\0';
 	return (strlen(new) > 0 ? new : NULL);
@@ -256,7 +257,7 @@ int String__Join(String *s, const char **arr, const char delim) {
 
 	int i = 0;
 	while(arr[i] != NULL) {
-		s->data = (char *)realloc(s->data, s->idx + (strlen(arr[i]) + 1);
+		s->data = (char *)realloc(s->data, s->idx + (strlen(arr[i]) + 1));
 		strncat(s->data, arr[i], strlen(arr[i]));
 		if(arr[i + 1] != NULL)
 			strncat(s->data, &delim, sizeof(char));
@@ -270,12 +271,11 @@ int String__Join(String *s, const char **arr, const char delim) {
 	return 1;
 }
 
-void DestroyString(String *s) {
-	if(s->data) {
-		free(s->data);
-		s->data = NULL;
-	}
+int DestroyString(String *s) {
+	if(s->data)
+		return 0;
 
-	free(s);
-	s = NULL;
+	free(s->data);
+	s->data = NULL;
+	return 1;
 }
