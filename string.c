@@ -230,7 +230,5 @@ int String__FindStringAt(String *s, const char *data, int match_count) {
 		}
 	}
 
-	printf("%d\n", matches);
-
 	return -1;
 }
