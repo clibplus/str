@@ -22,7 +22,10 @@ String NewString(const char *p) {
 
 		.AppendString	= String__AppendString,
 		.FindString 	= String__FindString,
-		.FindStringAt	= String__FindStringAt
+		.FindStringAt	= String__FindStringAt,
+		.GetSubstr		= String__GetSubstr,
+		.Join			= String__Join,
+		.Destruct		= DestroyString
 	};
 
 	return s;
@@ -231,6 +234,40 @@ int String__FindStringAt(String *s, const char *data, int match_count) {
 	}
 
 	return -1;
+}
+
+char *String__GetSubstr(String *s, int start, int end) {
+	if(!s || !s->data)
+		return NULL;
+
+	int new_len = s->idx + (end - start) + 1;
+	char *new = (char *)malloc(new_len);
+	for(int i = 0; i < s->idx; i++)
+		if(i > start || i < end)
+			strncat(new, s->data[i], sizeof(char));
+
+	new[strlen(new) - 1] = '\0';
+	return (strlen(new) > 0 ? new : NULL);
+}
+
+int String__Join(String *s, const char **arr, const char delim) {
+	if(!s || !s->data || !arr)
+		return 0;
+
+	int i = 0;
+	while(arr[i] != NULL) {
+		s->data = (char *)realloc(s->data, s->idx + (strlen(arr[i]) + 1);
+		strncat(s->data, arr[i], strlen(arr[i]));
+		if(arr[i + 1] != NULL)
+			strncat(s->data, &delim, sizeof(char));
+
+		i++;
+	}
+
+	s->idx = strlen(s->data) + 1;
+	s->data[s->idx - 1] = '\0';
+	s->data = (char *)realloc(s->data, s->idx);
+	return 1;
 }
 
 void DestroyString(String *s) {
