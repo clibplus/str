@@ -18,8 +18,10 @@ String NewString(const char *p) {
 		.CountChar		= String__CountChar,
 		.Trim			= String__Trim,
 		.Strip			= String__Strip,
+		.StripFrom2End 	= String__StripPos2End,
 
-		.AppendString	= String__AppendString
+		.AppendString	= String__AppendString,
+		.FindString 	= String__FindString
 	};
 
 	return s;
@@ -123,6 +125,23 @@ int String__Strip(String *s) {
 	return 1;
 }
 
+int String__StripPos2End(String *s, int idx) {
+	if(!s || !s->data)
+		return 0;
+
+	int new_len = s->idx - (s->idx - idx);
+	char *new = (char *)malloc(new_len);
+	memset(new, '\0', new_len);
+
+	for(int i = 0; i < new_len; i++)
+		new[i] = s->data[i];
+
+	free(s->data);
+	s->data = new;
+	s->idx = new_len;
+	return 1;
+}
+
 void String__ReplaceChar(String *s, const char ch, const char *data) {
 	char *new = (char *)malloc(s->idx);
 	int idx = 0;
@@ -165,4 +184,13 @@ int String__AppendString(String *s, const char *data) {
 		s->data = (char *)realloc(s->data, s->idx + 1);
 	}
 	return 1;
+}
+
+int String__FindString(String *s, const char *data) {
+	for(int i = 0; i < strlen(data); i++) {
+		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1])
+			return i;
+	}
+
+	return -1;
 }
