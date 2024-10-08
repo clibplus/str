@@ -25,7 +25,8 @@ String NewString(const char *p) {
 		.FindStringAt	= String__FindStringAt,
 		.GetSubstr		= String__GetSubstr,
 		.Join			= String__Join,
-		.Destruct		= DestroyString
+		.Destruct		= DestroyString,
+		.Replace		= String__Replace
 	};
 
 	return s;
@@ -244,11 +245,40 @@ char *String__GetSubstr(String *s, int start, int end) {
 	int new_len = s->idx + (end - start) + 1;
 	char *new = (char *)malloc(new_len);
 	for(int i = 0; i < s->idx; i++)
-		if(i > start || i < end)
+		if(i >= start && i < end)
 			strncat(new, &s->data[i], sizeof(char));
 
-	new[strlen(new) - 1] = '\0';
+	new[strlen(new)] = '\0';
 	return (strlen(new) > 0 ? new : NULL);
+}
+
+int String__Replace(String *s, const char *find, const char *replace) {
+	if(!s || !s->data || !find || !replace)
+		return 0;
+
+	int start = String__FindStringAt(s, find, 0) == -1 ? 0 : 0;
+	int end = 0, idx = 1;
+	char *new = (char *)malloc(1);
+
+	while(end != -1) {
+		end = String__FindStringAt(s, find, idx);
+		char *substr = String__GetSubstr(s, start, (end == -1 ? s->idx - strlen(find) - 1 : end) );
+
+		idx += strlen(substr) + strlen(replace);
+		new = (char *)realloc(new, idx);
+
+		strncat(new, substr, strlen(substr));
+		strncat(new, replace, strlen(replace));
+
+		free(substr);
+		start = end + strlen(find);
+	}
+
+	free(s->data);
+	s->data = new;
+	s->idx = idx;
+
+	return 1;
 }
 
 int String__Join(String *s, const char **arr, const char delim) {
@@ -263,11 +293,35 @@ int String__Join(String *s, const char **arr, const char delim) {
 			strncat(s->data, &delim, sizeof(char));
 
 		i++;
+		s->idx += strlen((const char *)&arr[i])  + 1;
 	}
 
 	s->idx = strlen(s->data) + 1;
 	s->data[s->idx - 1] = '\0';
-	s->data = (char *)realloc(s->data, s->idx);
+	return 1;
+}
+
+int String__IsLowerCase(String *s) {
+	for(int i = 0; i < s->idx; i++) {
+		if(!s->data[i])
+			break;
+
+		if(!islower(s->data[i]))
+			return 0;
+	}
+
+	return 1;
+}
+
+int String__IsUppercase(String *s) {
+	for(int i = 0; i < s->idx; i++) {
+		if(!s->data[i])
+			break;
+
+		if(!isupper(s->data[i]))
+			return 0;
+	}
+
 	return 1;
 }
 

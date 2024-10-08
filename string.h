@@ -16,6 +16,7 @@ typedef struct String {
 	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);
 	char		*(*GetSubstr)	(struct String *s, int start, int end);
 	int			(*Join)			(struct String *s, const char **arr, const char delim);
+	int			(*Replace)		(struct String *s, const char *find, const char *replace);
 	int			(*Destruct)		(struct String *s);
 } String;
 
@@ -93,11 +94,28 @@ int 		String__FindStringAt(String *s, const char *data, int match_count);
 char 		*String__GetSubstr(String *s, int start, int end);
 
 //
+//			| - > Replace a string
+//			| - > Returns 1 upon success and 0 on failure
+//
+int 		String__Replace(String *s, const char *find, const char *replace);
+
+//
 //			| - > Add an array of elements to the string with a delim between each element
 //			| - > Returns 1 upon success or 0 upon failures
 //
 int 		String__Join(String *s, const char **arr, const char delim);
 
+//
+//			| - > Check if the string is all lowercase
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		String__IsLowerCase(String *s);
+
+//
+//			| - > Check if the string is all uppercase
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		String__IsUppercase(String *s);
 //
 //			| - > Destruct the String struct
 //
