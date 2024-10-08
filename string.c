@@ -25,8 +25,10 @@ String NewString(const char *p) {
 		.FindStringAt	= String__FindStringAt,
 		.GetSubstr		= String__GetSubstr,
 		.Join			= String__Join,
-		.Destruct		= DestroyString,
-		.Replace		= String__Replace
+		.Replace		= String__Replace,
+		.IsUppercase	= String__IsUppercase,
+		.IsLowercase	= String__IsLowercase,
+		.Destruct		= DestroyString
 	};
 
 	return s;
@@ -262,7 +264,7 @@ int String__Replace(String *s, const char *find, const char *replace) {
 
 	while(end != -1) {
 		end = String__FindStringAt(s, find, idx);
-		char *substr = String__GetSubstr(s, start, (end == -1 ? s->idx - strlen(find) - 1 : end) );
+		char *substr = String__GetSubstr(s, start, (end == -1 ? (int)(s->idx - strlen(find) - 1) : end) );
 
 		idx += strlen(substr) + strlen(replace);
 		new = (char *)realloc(new, idx);
@@ -276,7 +278,7 @@ int String__Replace(String *s, const char *find, const char *replace) {
 
 	free(s->data);
 	s->data = new;
-	s->idx = idx;
+	s->idx = strlen(new);
 
 	return 1;
 }
@@ -301,7 +303,7 @@ int String__Join(String *s, const char **arr, const char delim) {
 	return 1;
 }
 
-int String__IsLowerCase(String *s) {
+int String__IsLowercase(String *s) {
 	for(int i = 0; i < s->idx; i++) {
 		if(!s->data[i])
 			break;

@@ -17,6 +17,8 @@ typedef struct String {
 	char		*(*GetSubstr)	(struct String *s, int start, int end);
 	int			(*Join)			(struct String *s, const char **arr, const char delim);
 	int			(*Replace)		(struct String *s, const char *find, const char *replace);
+	int			(*IsUppercase)	(struct String *s);
+	int 		(*IsLowercase)	(struct String *s);
 	int			(*Destruct)		(struct String *s);
 } String;
 
@@ -109,7 +111,7 @@ int 		String__Join(String *s, const char **arr, const char delim);
 //			| - > Check if the string is all lowercase
 //			| - > Returns 1 upon success or 0 upon failure
 //
-int 		String__IsLowerCase(String *s);
+int 		String__IsLowercase(String *s);
 
 //
 //			| - > Check if the string is all uppercase
