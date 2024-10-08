@@ -19,6 +19,7 @@ typedef struct String {
 	int			(*Replace)		(struct String *s, const char *find, const char *replace);
 	int			(*IsUppercase)	(struct String *s);
 	int 		(*IsLowercase)	(struct String *s);
+	char 		**(*Split)		(struct String *s, const char *delim);
 	int			(*Destruct)		(struct String *s);
 } String;
 
@@ -108,6 +109,12 @@ int 		String__Replace(String *s, const char *find, const char *replace);
 int 		String__Join(String *s, const char **arr, const char delim);
 
 //
+//			| - > Split a string with the delim provided
+//			| - > Returns an array upon success or NULL upon failure
+//
+char 		**String__Split(String *s, const char *delim);
+
+//
 //			| - > Check if the string is all lowercase
 //			| - > Returns 1 upon success or 0 upon failure
 //
@@ -118,6 +125,7 @@ int 		String__IsLowercase(String *s);
 //			| - > Returns 1 upon success or 0 upon failure
 //
 int 		String__IsUppercase(String *s);
+
 //
 //			| - > Destruct the String struct
 //

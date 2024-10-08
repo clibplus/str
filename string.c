@@ -28,6 +28,7 @@ String NewString(const char *p) {
 		.Replace		= String__Replace,
 		.IsUppercase	= String__IsUppercase,
 		.IsLowercase	= String__IsLowercase,
+		.Split			= String__Split,
 		.Destruct		= DestroyString
 	};
 
@@ -203,6 +204,18 @@ int String__AppendString(String *s, const char *data) {
 	return 1;
 }
 
+int String__IsEmpty(String *s) {
+	for(int i = 0; i < s->idx; i++) {
+		if(!s->data[i])
+			break;
+
+		if(!isblank(s->data[i]))
+			return 0;
+	}
+
+	return 1;
+}
+
 int String__FindString(String *s, const char *data) {
 	if(!s || !s->data || !data)
 		return -1;
@@ -325,6 +338,22 @@ int String__IsUppercase(String *s) {
 	}
 
 	return 1;
+}
+
+char **String__Split(String *s, const char *delim) {
+	char **arr = (char **)malloc(sizeof(char *) * 1);
+	int idx = 0;
+
+	char *token = strtok(s->data, delim);
+	while(token != NULL) {
+		arr[idx] = strdup(token);
+		idx++;
+		arr = (char **)realloc(arr, sizeof(char *) * (idx + 1));
+		token = strtok(NULL, delim);
+	}
+
+	arr[idx] = NULL;
+	return arr;
 }
 
 int DestroyString(String *s) {
