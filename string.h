@@ -20,6 +20,7 @@ typedef struct String {
 	int			(*IsUppercase)	(struct String *s);
 	int 		(*IsLowercase)	(struct String *s);
 	char 		**(*Split)		(struct String *s, const char *delim);
+	char 		**(*SplitAlt)	(struct String *s, const char *delim);
 	int			(*Destruct)		(struct String *s);
 } String;
 

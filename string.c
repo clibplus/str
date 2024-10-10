@@ -29,6 +29,7 @@ String NewString(const char *p) {
 		.IsUppercase	= String__IsUppercase,
 		.IsLowercase	= String__IsLowercase,
 		.Split			= String__Split,
+		.SplitAlt		= String__SplitAlt,
 		.Destruct		= DestroyString
 	};
 
