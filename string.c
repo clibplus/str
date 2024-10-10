@@ -220,6 +220,9 @@ int String__FindString(String *s, const char *data) {
 	if(!s || !s->data || !data)
 		return -1;
 
+	if((long)strlen(data) < s->idx)
+		return -1;
+
 	for(int i = 0; i < s->idx; i++) {
 		if(s->data[i] == data[0] && s->data[i + strlen(data) - 1] == data[strlen(data) - 1]) {
 			for(int ch = 0; ch < (int)strlen(data); ch++) {
@@ -259,9 +262,14 @@ char *String__GetSubstr(String *s, int start, int end) {
 
 	int new_len = s->idx + (end - start) + 1;
 	char *new = (char *)malloc(new_len);
+	memset(new, '\0', new_len);
+	int idx = 0;
+
 	for(int i = 0; i < s->idx; i++)
-		if(i >= start && i < end)
+		if(i >= start && i < end) {
 			strncat(new, &s->data[i], sizeof(char));
+			idx++;
+		}
 
 	new[strlen(new)] = '\0';
 	return (strlen(new) > 0 ? new : NULL);
@@ -316,6 +324,35 @@ int String__Join(String *s, const char **arr, const char delim) {
 	return 1;
 }
 
+int String__StartsWith(String *s, const char *data) {
+	if(!s || !s->data)
+		return -1;
+
+	if((long)strlen(data) < s->idx)
+		return -1;
+
+	for(int i = 0; i < (int)strlen(data); i++)
+		if(s->data[i] != data[i])
+			return 0;
+
+	return 1;
+}
+
+int String__EndsWith(String *s, const char *data) {
+	if(!s || !s->data)
+		return -1;
+
+	if((long)strlen(data) < s->idx)
+		return -1;
+
+	int start = s->idx - strlen(data);
+	for(int i = start; start < s->idx; i++)
+		if(s->data[i] != data[i])
+			return 0;
+
+	return 1;
+}
+
 int String__IsLowercase(String *s) {
 	for(int i = 0; i < s->idx; i++) {
 		if(!s->data[i])
@@ -344,7 +381,8 @@ char **String__Split(String *s, const char *delim) {
 	char **arr = (char **)malloc(sizeof(char *) * 1);
 	int idx = 0;
 
-	char *token = strtok(s->data, delim);
+	char *copy = strdup(s->data);
+	char *token = strtok(copy, delim);
 	while(token != NULL) {
 		arr[idx] = strdup(token);
 		idx++;
@@ -353,6 +391,28 @@ char **String__Split(String *s, const char *delim) {
 	}
 
 	arr[idx] = NULL;
+	free(copy);
+	return arr;
+}
+
+char **String__SplitAlt(String *s, const char *delim) {
+	if(!s || !s->data || !delim)
+		return (char **)NULL;
+
+	char **arr = (char **)malloc(sizeof(char *) * 1);
+	int last = 0;
+	int i = 1;
+	while(last != -1) {
+		int pos = String__FindStringAt(s, delim, i);
+		char *sub = String__GetSubstr(s, last, pos == -1 ? s->idx : pos);
+		arr[i] = sub;
+		i++;
+		arr = (char **)realloc(arr, sizeof(char *) * (i + 1));
+		last = pos + strlen(delim);
+
+		if(pos == -1) break;
+	}
+
 	return arr;
 }
 

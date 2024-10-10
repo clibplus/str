@@ -115,6 +115,24 @@ int 		String__Join(String *s, const char **arr, const char delim);
 char 		**String__Split(String *s, const char *delim);
 
 //
+//			| - > Split string with the delim provided
+//			| - > Returns an array upon success or NULL upon failure
+//
+char 		**String__SplitAlt(String *s, const char *delim);
+
+//
+//			| - > Validate if a starts with the provided string
+//			| - > Returns -1 upon failure, 0 upon not found, and 1 upon true
+//
+int 		String__StartsWith(String *s, const char *data);
+
+//
+//			| - > Validate if a ends with the provided string
+//			| - > Returns -1 upon failure, 0 upon not found, and 1 upon true
+//
+int 		String__EndsWith(String *s, const char *data);
+
+//
 //			| - > Check if the string is all lowercase
 //			| - > Returns 1 upon success or 0 upon failure
 //
