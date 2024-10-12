@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "string.h"
+#include "str.h"
 
 String NewString(const char *p) {
 	if(!p)
