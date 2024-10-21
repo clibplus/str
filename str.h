@@ -11,6 +11,8 @@ typedef struct String {
 	int			(*Strip)		(struct String *s);
 	int 		(*StripFrom2End)(struct String *s, int idx);
 
+	int 		(*StartsWith)	(struct String *s, const char *data);
+	int			(*EndsWith)		(struct String *s, const char *data);
 	int			(*AppendString)	(struct String *s, const char *data);
 	int			(*FindString)	(struct String *s, const char *data);
 	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);
@@ -77,6 +79,18 @@ int 		String__Strip(String *s);
 //			| - > Returns 1 upon sucess or 0 upon failures
 //
 int 		String__StripPos2End(String *s, int idx);
+
+//
+//			| - > Check if the current string starts with the string provided
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		StartsWith(Stirng *s, const char *data);
+
+//
+//			| - > Check if the current string ends with the string provided
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		EndsWith(String *s, const char *data);
 
 //
 //			| - > Find a substr in the current string

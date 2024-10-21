@@ -160,6 +160,34 @@ int String__StripPos2End(String *s, int idx) {
 	return 1;
 }
 
+int StartsWith(Stirng *s, const char *data) {
+	if(!s || !data)
+		return 0
+
+	if(strlen(data) >= s->idx)
+		return 0;
+
+	for(int i = 0; i < strlen(data); i++)
+		if(s->data[i] != data[i])
+			return 0;
+
+	return 1;
+}
+
+int EndsWith(String *s, const char *data) {
+	if(!s || !data)
+		return 0;
+
+	if(strlen(data) >= s->idx)
+		return 0;
+
+	for(int i = s->idx; i > s->idx; i--)
+		if(s->data[i] != data[i])
+			return 0;
+
+	return 1;
+}
+
 int String__ReplaceChar(String *s, const char ch, const char *data) {
 	if(!s || !s->data)
 		return 0;
