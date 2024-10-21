@@ -162,7 +162,7 @@ int String__StripPos2End(String *s, int idx) {
 
 int StartsWith(String *s, const char *data) {
 	if(!s || !data)
-		return 0
+		return 0;
 
 	if(strlen(data) >= s->idx)
 		return 0;
