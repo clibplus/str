@@ -160,7 +160,7 @@ int String__StripPos2End(String *s, int idx) {
 	return 1;
 }
 
-int StartsWith(Stirng *s, const char *data) {
+int StartsWith(String *s, const char *data) {
 	if(!s || !data)
 		return 0
 

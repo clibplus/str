@@ -84,7 +84,7 @@ int 		String__StripPos2End(String *s, int idx);
 //			| - > Check if the current string starts with the string provided
 //			| - > Returns 1 upon success or 0 upon failure
 //
-int 		StartsWith(Stirng *s, const char *data);
+int 		StartsWith(String *s, const char *data);
 
 //
 //			| - > Check if the current string ends with the string provided
