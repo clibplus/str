@@ -11,6 +11,7 @@ typedef struct String {
 	int			(*Strip)		(struct String *s);
 	int 		(*StripFrom2End)(struct String *s, int idx);
 
+	int			(*isNumber)		(struct String *s);
 	int 		(*StartsWith)	(struct String *s, const char *data);
 	int			(*EndsWith)		(struct String *s, const char *data);
 	int			(*AppendString)	(struct String *s, const char *data);
@@ -79,6 +80,12 @@ int 		String__Strip(String *s);
 //			| - > Returns 1 upon sucess or 0 upon failures
 //
 int 		String__StripPos2End(String *s, int idx);
+
+//
+//			| - > Check if a string is a number
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		isNumber(String *s);
 
 //
 //			| - > Check if the current string starts with the string provided

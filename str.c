@@ -23,6 +23,7 @@ String NewString(const char *p) {
 		.AppendString	= String__AppendString,
 		.FindString 	= String__FindString,
 		.FindStringAt	= String__FindStringAt,
+		.isNumber		= isNumber,
 		.GetSubstr		= String__GetSubstr,
 		.Join			= String__Join,
 		.Replace		= String__Replace,
@@ -157,6 +158,14 @@ int String__StripPos2End(String *s, int idx) {
 	free(s->data);
 	s->data = new;
 	s->idx = new_len;
+	return 1;
+}
+
+int isNumber(String *s) {
+	for(int i = 0; i < s->idx; i++)
+		if(!s->data[i])
+			return 0;
+
 	return 1;
 }
 
