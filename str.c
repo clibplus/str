@@ -120,7 +120,7 @@ int String__Trim(String *s, const char ch) {
 
 
 
-int String__TrimAt(String *s, int idx) {
+int String__TrimAt(String *s, int pos) {
 	if(!s || !s->data)
 		return 0;
 
@@ -131,7 +131,7 @@ int String__TrimAt(String *s, int idx) {
 		if(!s->data[i])
 			break;
 
-		if(i == idx) {
+		if(i == pos) {
 			found = 1;
 			continue;
 		}
