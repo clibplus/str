@@ -326,7 +326,7 @@ int String__RemoveSubstr(String *s, int start, int end) {
 		if(!s->data[i])
 			break;
 
-		new[idx] = s->data[i]
+		new[idx] = s->data[i];
 		idx++;
 		new = (char *)realloc(new, idx + 1);
 	}
