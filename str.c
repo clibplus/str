@@ -313,6 +313,33 @@ char *String__GetSubstr(String *s, int start, int end) {
 	return (strlen(new) > 0 ? new : NULL);
 }
 
+int String__RemoveSubstr(String *s, int start, int end) {
+	if(!s || !s->data)
+		return -0;
+
+	char *new = (char *)malloc(1);
+	int idx = 0;
+	for(int i = 0; i < s->idx; i++) {
+		if(i > start || i < end)
+			continue;
+
+		if(!s->data[i])
+			break;
+
+		new[idx] = s->data[i]
+		idx++;
+		new = (char *)realloc(new, idx + 1);
+	}
+
+	new[idx] = '\0';
+
+	free(s->data);
+	s->data = new;
+	s->idx = idx;
+
+	return 1;
+}
+
 int String__Replace(String *s, const char *find, const char *replace) {
 	if(!s || !s->data || !find || !replace)
 		return 0;

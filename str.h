@@ -4,27 +4,37 @@ typedef struct String {
 	char 		*data;
 	long 		idx;
 
-	int 		(*FindChar)		(struct String *s, const char ch);
-	int 		(*FindCharAt)	(struct String *s, const char ch, int match_count);
-	int 		(*CountChar)	(struct String *s, const char ch);
-	int 		(*Trim)			(struct String *s, const char ch);
-	int			(*Strip)		(struct String *s);
+	/* Char Checking Operations */
+	int 		(*FindChar)		(struct String *s, const char ch);							// Find a char in string
+	int 		(*FindCharAt)	(struct String *s, const char ch, int match_count);			// Find a char in string at the matching match count position
+	int 		(*CountChar)	(struct String *s, const char ch);							// Count the amount of time a char in string matches the provided char
+
+	/* Char Moodifying Operation */
+	int 		(*Trim)			(struct String *s, const char ch);							// Trim a char from string
+	int			(*Strip)		(struct String *s);											// Strip whitespaces from string
 	int 		(*StripFrom2End)(struct String *s, int idx);
 
-	int			(*isNumber)		(struct String *s);
-	int 		(*StartsWith)	(struct String *s, const char *data);
-	int			(*EndsWith)		(struct String *s, const char *data);
-	int			(*AppendString)	(struct String *s, const char *data);
-	int			(*FindString)	(struct String *s, const char *data);
-	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);
-	char		*(*GetSubstr)	(struct String *s, int start, int end);
-	int			(*Join)			(struct String *s, const char **arr, const char delim);
-	int			(*Replace)		(struct String *s, const char *find, const char *replace);
-	int			(*IsUppercase)	(struct String *s);
-	int 		(*IsLowercase)	(struct String *s);
-	char 		**(*Split)		(struct String *s, const char *delim);
-	char 		**(*SplitAlt)	(struct String *s, const char *delim);
-	int			(*Destruct)		(struct String *s);
+	/* String Checking Operation */
+	int			(*isEmpty)		(struct String *s); 										// Checks if string is empty
+	int			(*isNumber)		(struct String *s);											// Checks if string is a number
+	int			(*IsUppercase)	(struct String *s);											// Checks if string is all uppercase
+	int 		(*IsLowercase)	(struct String *s);											// Checks if string is all lowercase
+	int 		(*StartsWith)	(struct String *s, const char *data);						// Checks if string starts with a substring
+	int			(*EndsWith)		(struct String *s, const char *data);						// Checks if string ends with a substring
+	int			(*FindString)	(struct String *s, const char *data);						// Checks if string contains a substring
+	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);				// Checks if string contains a substring matching the match count position provided
+
+	/* String Getters */
+	char		*(*GetSubstr)	(struct String *s, int start, int end);						// Get a substring from start to end position in the string
+	char 		**(*Split)		(struct String *s, const char *delim);						// Split the current string with delim
+	char 		**(*SplitAlt)	(struct String *s, const char *delim);						// Backup function for Split (TESTING STAGES)
+	
+	/* String Modifying Operations */
+	int			(*AppendString)	(struct String *s, const char *data);						// Append a substring to the current string
+	int			(*RmSubstr)		(struct String *s, int start, int end);						// Remove a substring from the current string
+	int			(*Join)			(struct String *s, const char **arr, const char delim);		// Append an array of elements to the current string
+	int			(*Replace)		(struct String *s, const char *find, const char *replace);	// Replace a substring in string with a new string
+	int			(*Destruct)		(struct String *s);											// Destruct the string structure
 } String;
 
 //
@@ -117,6 +127,12 @@ int 		String__FindStringAt(String *s, const char *data, int match_count);
 //			| - > Returns a pointer to the string upon success or NULL upon failure
 //
 char 		*String__GetSubstr(String *s, int start, int end);
+
+//
+//			| - > Remove a substr from the current string
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		String__RemoveSubstr(String *s, int start, int end);
 
 //
 //			| - > Replace a string
