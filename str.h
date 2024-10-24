@@ -68,6 +68,12 @@ int 		String__CountChar(String *s, const char ch);
 int 		String__Trim(String *s, const char ch);
 
 //
+//			| - > Trim a char from string at a position in string
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		String__TrimAt(String *s, int idx);
+
+//
 //			| - > Replace character with a string
 //			| - > Returns 1 upon success or 0 upon failures
 //

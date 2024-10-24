@@ -117,6 +117,37 @@ int String__Trim(String *s, const char ch) {
 	return found;
 }
 
+
+
+int String__TrimAt(String *s, int idx) {
+	if(!s || !s->data)
+		return 0;
+
+	int found = 0, idx = 0;
+	char *new = (char *)malloc(1);
+
+	for(int i = 0; i < s->idx; i++) {
+		if(!s->data[i])
+			break;
+
+		if(i == idx) {
+			found = 1;
+			continue;
+		}
+
+		new[idx] = s->data[i];
+		idx++;
+		new = (char *)realloc(new, idx + 1);
+	}
+
+	new[idx] = '\0';
+	free(s->data);
+	s->data = new;
+	s->idx = strlen(new);
+
+	return found;
+}
+
 int String__Strip(String *s) {
 	if(!s || !s->data) return 0;
 
