@@ -17,6 +17,7 @@ String NewString(const char *p) {
 		.FindCharAt		= String__FindCharAt,
 		.CountChar		= String__CountChar,
 		.Trim			= String__Trim,
+		.TrimAt			= String__TrimAt,
 		.Strip			= String__Strip,
 		.StripFrom2End 	= String__StripPos2End,
 
