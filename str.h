@@ -99,10 +99,16 @@ int 		String__Strip(String *s);
 int 		String__StripPos2End(String *s, int idx);
 
 //
+//			| - > Check if the current string is empty
+//			| - > Returns 1 upon success or 0 on failure
+//
+int	 		String__IsEmpty(String *s);
+
+//
 //			| - > Check if a string is a number
 //			| - > Returns 1 upon success or 0 upon failure
 //
-int 		isNumber(String *s);
+int 		String__isNumber(String *s);
 
 //
 //			| - > Check if the current string starts with the string provided
