@@ -24,6 +24,7 @@ String NewString(const char *p) {
 		.isEmpty		= String__IsEmpty
 		.isNumber		= String__isNumber,
 		.AppendString	= String__AppendString,
+		.AppendArray 	= String__AppendArray,
 		.FindString 	= String__FindString,
 		.FindStringAt	= String__FindStringAt,
 		.GetSubstr		= String__GetSubstr,
@@ -273,6 +274,17 @@ int String__ReplaceChar(String *s, const char ch, const char *data) {
 	s->data = new;
 	s->idx = strlen(new);
 	return found;
+}
+
+int String__AppendArray(String *s, const char **data) {
+	if(!s || !data)
+		return 0;
+
+	int i = 0;
+	while(!data[i])
+		String__AppendString(s, data[i]);
+
+	return 1;
 }
 
 int String__AppendString(String *s, const char *data) {
