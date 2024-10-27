@@ -21,7 +21,7 @@ String NewString(const char *p) {
 		.Strip			= String__Strip,
 		.StripFrom2End 	= String__StripPos2End,
 
-		.isEmpty		= String__IsEmpty
+		.isEmpty		= String__IsEmpty,
 		.isNumber		= String__isNumber,
 		.AppendString	= String__AppendString,
 		.AppendArray 	= String__AppendArray,
