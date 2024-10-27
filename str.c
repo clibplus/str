@@ -299,18 +299,6 @@ int String__AppendString(String *s, const char *data) {
 	return 1;
 }
 
-int String__IsEmpty(String *s) {
-	for(int i = 0; i < s->idx; i++) {
-		if(!s->data[i])
-			break;
-
-		if(!isblank(s->data[i]))
-			return 0;
-	}
-
-	return 1;
-}
-
 int String__FindString(String *s, const char *data) {
 	if(!s || !s->data || !data)
 		return -1;
