@@ -332,8 +332,7 @@ int String__AppendInt(String *s, int num) {
 	char BUFF[100];
 	sprintf(BUFF, "%d", num);
 
-	strncat(s->data, BUFF, strlen(BUFF));
-	s->idx += strlen(BUFF);
+	String__AppendString(s, BUFF);
 
 	return 1;
 }
