@@ -5,44 +5,52 @@
 
 #include "str.h"
 
+String ConstructMethods(String *s);
+
 String NewString(const char *p) {
 	if(!p)
-		return (String){ .data = (char *)malloc(1), .idx = 0 };
+		return ConstructMethods(&(String){ .data = (char *)malloc(1), .idx = 0 });
 
 	String s = {
 		.data 			= (!p ? NULL : strdup(p)),
 		.idx 			= (!p ? 0 : strlen(p)),
-
-		.FindChar		= String__FindChar,
-		.FindCharAt		= String__FindCharAt,
-		.CountChar		= String__CountChar,
-		.Trim			= String__Trim,
-		.TrimAt			= String__TrimAt,
-		.Strip			= String__Strip,
-		.StripFrom2End 	= String__StripPos2End,
-
-		.isEmpty		= String__IsEmpty,
-		.isNumber		= String__isNumber,
-		.AppendStr 		= String__AppendStr,
-		.AppendString	= String__AppendString,
-		.AppendNum 		= String__AppendInt,
-		.AppendArray 	= String__AppendArray,
-		.AppendiArray	= String__AppendIntArray,
-		.FindString 	= String__FindString,
-		.FindStringAt	= String__FindStringAt,
-		.GetSubstr		= String__GetSubstr,
-		.Join			= String__Join,
-		.Replace		= String__Replace,
-		.IsUppercase	= String__IsUppercase,
-		.IsLowercase	= String__IsLowercase,
-		.StartsWith		= String__StartsWith,
-		.EndsWith 		= String__EndsWith,
-		.Split			= String__Split,
-		.SplitAlt		= String__SplitAlt,
-		.Destruct		= DestroyString
 	};
 
+	s = ConstructMethods(&s);
+
 	return s;
+}
+
+String ConstructMethods(String *s) {
+	s->FindChar			= String__FindChar;
+	s->FindCharAt		= String__FindCharAt;
+	s->CountChar		= String__CountChar;
+	s->Trim				= String__Trim;
+	s->TrimAt			= String__TrimAt;
+	s->Strip			= String__Strip;
+	s->StripFrom2End 	= String__StripPos2End;
+
+	s->isEmpty			= String__IsEmpty;
+	s->isNumber			= String__isNumber;
+	s->AppendStr 		= String__AppendStr;
+	s->AppendString		= String__AppendString;
+	s->AppendNum 		= String__AppendInt;
+	s->AppendArray 		= String__AppendArray;
+	s->AppendiArray		= String__AppendIntArray;
+	s->FindString 		= String__FindString;
+	s->FindStringAt		= String__FindStringAt;
+	s->GetSubstr		= String__GetSubstr;
+	s->Join				= String__Join;
+	s->Replace			= String__Replace;
+	s->IsUppercase		= String__IsUppercase;
+	s->IsLowercase		= String__IsLowercase;
+	s->StartsWith		= String__StartsWith;
+	s->EndsWith 		= String__EndsWith;
+	s->Split			= String__Split;
+	s->SplitAlt			= String__SplitAlt;
+	s->Destruct			= DestroyString;
+
+	return *s;
 }
 
 int String__FindChar(String *s, const char ch) {
@@ -331,6 +339,7 @@ int String__AppendInt(String *s, int num) {
 
 	char *BUFF = (char *)malloc(100);
 	memset(BUFF, '\0', 100);
+	
 	sprintf(BUFF, "%d\0", num);
 
 	String__AppendString(s, BUFF);
