@@ -31,6 +31,7 @@ typedef struct String {
 	char 		**(*SplitAlt)	(struct String *s, const char *delim);						// Backup function for Split (TESTING STAGES)
 	
 	/* String Modifying Operations */
+	int 		(*AppendStr)	(struct String *s, struct String *new);						// Append a substring using another String struct into the current string
 	int			(*AppendString)	(struct String *s, const char *data);						// Append a substring to the current string
 	int			(*AppendArray)	(struct String *s, const char **data);						// Append a substring to the current string
 	int			(*AppendNum)	(struct String *s, int num);								// Append a number int type to the current string
@@ -81,6 +82,12 @@ int 		String__TrimAt(String *s, int idx);
 //			| - > Returns 1 upon success or 0 upon failures
 //
 int 		String__ReplaceChar(String *s, const char ch, const char *data);
+
+//
+//			| - > Append a string to the current string
+//			| - > Returns 1 upon success or 0 upon failures
+//
+int 		String__AppendStr(String *s, String *new);
 
 //
 //			| - > Append a string to the current string

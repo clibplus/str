@@ -23,6 +23,7 @@ String NewString(const char *p) {
 
 		.isEmpty		= String__IsEmpty,
 		.isNumber		= String__isNumber,
+		.AppendStr 		= String__AppendStr,
 		.AppendString	= String__AppendString,
 		.AppendNum 		= String__AppendInt,
 		.AppendArray 	= String__AppendArray,
@@ -277,6 +278,16 @@ int String__ReplaceChar(String *s, const char ch, const char *data) {
 	s->data = new;
 	s->idx = strlen(new);
 	return found;
+}
+
+int String__AppendStr(String *s, String *new) {
+	if(!s || !new)
+		return 0;
+
+	String__AppendString(s, new.idx);
+	new->Destruct(new);
+	
+	return 1;
 }
 
 int String__AppendArray(String *s, const char **data) {
