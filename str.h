@@ -34,6 +34,7 @@ typedef struct String {
 	int 		(*AppendStr)	(struct String *s, struct String *new);						// Append a substring using another String struct into the current string
 	int			(*AppendString)	(struct String *s, const char *data);						// Append a substring to the current string
 	int			(*AppendArray)	(struct String *s, const char **data);						// Append a substring to the current string
+	int 		(*AppendiArray)	(struct String *s, int *arr);								// Append elements from a int array to the current string
 	int			(*AppendNum)	(struct String *s, int num);								// Append a number int type to the current string
 	int			(*RmSubstr)		(struct String *s, int start, int end);						// Remove a substring from the current string
 	int			(*Join)			(struct String *s, const char **arr, const char delim);		// Append an array of elements to the current string
@@ -82,6 +83,12 @@ int 		String__TrimAt(String *s, int idx);
 //			| - > Returns 1 upon success or 0 upon failures
 //
 int 		String__ReplaceChar(String *s, const char ch, const char *data);
+
+//
+//			| - > Append an array of ints to the current string
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		String__AppendIntArray(String *s, int *arr);
 
 //
 //			| - > Append a string to the current string
