@@ -329,8 +329,8 @@ int String__AppendInt(String *s, int num) {
 	if(!s || !s->data)
 		return 0;
 
-	char *BUFF = (char *)malloc(20);
-	memset(BUFF, '\0', 20);
+	char *BUFF = (char *)malloc(100);
+	memset(BUFF, '\0', 100);
 	sprintf(BUFF, "%d\0", num);
 
 	String__AppendString(s, BUFF);
