@@ -329,10 +329,10 @@ int String__AppendInt(String *s, int num) {
 	if(!s || !s->data)
 		return 0;
 
-	char BUFF[100];
+	char BUFF[100] = {0};
 	sprintf(BUFF, "%d", num);
 
-	String__AppendString(s, BUFF);
+	String__AppendString(s, &BUFF);
 
 	return 1;
 }
