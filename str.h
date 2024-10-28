@@ -11,7 +11,7 @@ typedef struct String {
 
 	/* Char Moodifying Operation */
 	int 		(*Trim)			(struct String *s, const char ch);							// Trim a char from string
-	int 		(*TrimAt)		(struct String *s, int pos);							// Trim a char from string at the poistion provided in string
+	int 		(*TrimAt)		(struct String *s, int pos);								// Trim a char from string at the poistion provided in string
 	int			(*Strip)		(struct String *s);											// Strip whitespaces from string
 	int 		(*StripFrom2End)(struct String *s, int idx);
 

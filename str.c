@@ -32,6 +32,8 @@ String NewString(const char *p) {
 		.Replace		= String__Replace,
 		.IsUppercase	= String__IsUppercase,
 		.IsLowercase	= String__IsLowercase,
+		.StartsWith		= String__StartsWith,
+		.EndsWith 		= String__EndsWith,
 		.Split			= String__Split,
 		.SplitAlt		= String__SplitAlt,
 		.Destruct		= DestroyString
