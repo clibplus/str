@@ -33,6 +33,7 @@ typedef struct String {
 	/* String Modifying Operations */
 	int			(*AppendString)	(struct String *s, const char *data);						// Append a substring to the current string
 	int			(*AppendArray)	(struct String *s, const char **data);						// Append a substring to the current string
+	int			(*AppendNum)	(struct String *s, int num);								// Append a number int type to the current string
 	int			(*RmSubstr)		(struct String *s, int start, int end);						// Remove a substring from the current string
 	int			(*Join)			(struct String *s, const char **arr, const char delim);		// Append an array of elements to the current string
 	int			(*Replace)		(struct String *s, const char *find, const char *replace);	// Replace a substring in string with a new string
@@ -92,6 +93,12 @@ int 		String__AppendString(String *s, const char *data);
 //			| - > Returns 1 upon success or 0 upon failure
 //
 int 		String__AppendArray(String *s, const char **data);
+
+//
+//			| - > Append an int to the current string
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		String__AppendInt(String *s, int num);
 
 //
 //			| - > Strip the whitespaces in a string

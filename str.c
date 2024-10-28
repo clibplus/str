@@ -24,6 +24,7 @@ String NewString(const char *p) {
 		.isEmpty		= String__IsEmpty,
 		.isNumber		= String__isNumber,
 		.AppendString	= String__AppendString,
+		.AppendNum 		= String__AppendInt,
 		.AppendArray 	= String__AppendArray,
 		.FindString 	= String__FindString,
 		.FindStringAt	= String__FindStringAt,
@@ -298,6 +299,19 @@ int String__AppendString(String *s, const char *data) {
 		s->idx++;
 		s->data = (char *)realloc(s->data, s->idx + 1);
 	}
+	return 1;
+}
+
+int String__AppendInt(String *s, int num) {
+	if(!s || !s->data)
+		return 0;
+
+	char BUFF[100];
+	sprintf(BUFF, "%d", num);
+
+	strncat(s->data, BUFF, strlen(BUFF));
+	s->idx += strlen(BUFF);
+
 	return 1;
 }
 
