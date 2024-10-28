@@ -319,7 +319,7 @@ int String__AppendIntArray(String *s, int *arr) {
 		return 0;
 
 	int i = 0;
-	while(arr[i] != NULL)
+	while(arr[i] != '\0')
 		String__AppendInt(s, arr[i]);
 
 	return 1;
