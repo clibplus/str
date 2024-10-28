@@ -284,7 +284,7 @@ int String__AppendStr(String *s, String *new) {
 	if(!s || !new)
 		return 0;
 
-	String__AppendString(s, new.idx);
+	String__AppendString(s, new->data);
 	new->Destruct(new);
 	
 	return 1;
