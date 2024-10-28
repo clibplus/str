@@ -329,10 +329,11 @@ int String__AppendInt(String *s, int num) {
 	if(!s || !s->data)
 		return 0;
 
-	char BUFF[100] = {0};
+	char *BUFF = (char *)malloc(20);
+	memset(BUFF, '\0', 20);
 	sprintf(BUFF, "%d\0", num);
 
-	String__AppendString(s, ((const char *)&BUFF));
+	String__AppendString(s, BUFF));
 
 	return 1;
 }
