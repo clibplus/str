@@ -330,7 +330,7 @@ int String__AppendInt(String *s, int num) {
 		return 0;
 
 	char BUFF[100] = {0};
-	sprintf(BUFF, "%d", num);
+	sprintf(BUFF, "%d\0", num);
 
 	String__AppendString(s, ((const char *)&BUFF));
 
