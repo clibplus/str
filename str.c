@@ -320,7 +320,7 @@ int String__AppendIntArray(String *s, int *arr) {
 
 	int i = 0;
 	while(arr[i] != NULL)
-		String__AppendInt(s, *arr[i]);
+		String__AppendInt(s, arr[i]);
 
 	return 1;
 }
@@ -332,7 +332,7 @@ int String__AppendInt(String *s, int num) {
 	char BUFF[100] = {0};
 	sprintf(BUFF, "%d", num);
 
-	String__AppendString(s, &BUFF);
+	String__AppendString(s, (const char *[])&BUFF);
 
 	return 1;
 }
