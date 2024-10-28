@@ -27,6 +27,7 @@ String NewString(const char *p) {
 		.AppendString	= String__AppendString,
 		.AppendNum 		= String__AppendInt,
 		.AppendArray 	= String__AppendArray,
+		.AppendiArray	= String__AppendIntArray,
 		.FindString 	= String__FindString,
 		.FindStringAt	= String__FindStringAt,
 		.GetSubstr		= String__GetSubstr,
