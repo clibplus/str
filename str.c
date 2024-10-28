@@ -313,6 +313,17 @@ int String__AppendString(String *s, const char *data) {
 	return 1;
 }
 
+int String__AppendIntArray(String *s, int *arr) {
+	if(!s || !s->data)
+		return 0;
+
+	int i = 0;
+	while(arr[i] != NULL)
+		String__AppendInt(s, *arr[i]);
+
+	return 1;
+}
+
 int String__AppendInt(String *s, int num) {
 	if(!s || !s->data)
 		return 0;
