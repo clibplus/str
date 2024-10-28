@@ -333,8 +333,8 @@ int String__AppendInt(String *s, int num) {
 	memset(BUFF, '\0', 20);
 	sprintf(BUFF, "%d\0", num);
 
-	String__AppendString(s, BUFF));
-
+	String__AppendString(s, BUFF);
+	free(BUFF);
 	return 1;
 }
 
