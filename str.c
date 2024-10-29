@@ -304,8 +304,10 @@ int String__AppendArray(String *s, const char **data) {
 		return 0;
 
 	int i = 0;
-	while(data[i] != NULL)
+	while(data[i] != NULL) {
 		String__AppendString(s, data[i]);
+		i++;
+	}
 
 	return 1;
 }
