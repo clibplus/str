@@ -244,32 +244,43 @@ int String__Contains(String *s, const char *data) {
 	return (strstr(s->data, data) != 0 ? 1 : 0);
 }
 
-int StartsWith(String *s, const char *data) {
+int String__StartsWith(String *s, const char *data) {
 	if(!s || !data)
 		return 0;
 
 	if(strlen(data) >= s->idx)
 		return 0;
 
-	for(int i = 0; i < strlen(data); i++)
+	for(int i = 0; i < strlen(data); i++) {
 		if(s->data[i] != data[i])
 			return 0;
 
-	return 1;
+		if(i == strlen(data) - 1)
+			return 1;
+	}
+
+	return 0;
 }
 
-int EndsWith(String *s, const char *data) {
+int String__EndsWith(String *s, const char *data) {
 	if(!s || !data)
 		return 0;
 
 	if(strlen(data) >= s->idx)
 		return 0;
 
-	for(int i = s->idx; i > s->idx; i--)
-		if(s->data[i] != data[i])
+	int ch = 0;
+	for(int i = s->idx - strlen(data); i < s->idx; i++) {
+		if(s->data[i] != data[ch])
 			return 0;
 
-	return 1;
+		if(i == (s->idx - 1))
+			return 1;
+
+		ch++;
+	}
+
+	return 0;
 }
 
 int String__ReplaceChar(String *s, const char ch, const char *data) {
@@ -497,35 +508,6 @@ int String__Join(String *s, const char **arr, const char delim) {
 
 	s->idx = strlen(s->data) + 1;
 	s->data[s->idx - 1] = '\0';
-	return 1;
-}
-
-int String__StartsWith(String *s, const char *data) {
-	if(!s || !s->data)
-		return -1;
-
-	if((long)strlen(data) < s->idx)
-		return -1;
-
-	for(int i = 0; i < (int)strlen(data); i++)
-		if(s->data[i] != data[i])
-			return 0;
-
-	return 1;
-}
-
-int String__EndsWith(String *s, const char *data) {
-	if(!s || !s->data)
-		return -1;
-
-	if((long)strlen(data) < s->idx)
-		return -1;
-
-	int start = s->idx - strlen(data);
-	for(int i = start; start < s->idx; i++)
-		if(s->data[i] != data[i])
-			return 0;
-
 	return 1;
 }
 

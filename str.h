@@ -153,18 +153,6 @@ int 		String__Contains(String *s, const char *data);
 int 		String__isNumber(String *s);
 
 //
-//			| - > Check if the current string starts with the string provided
-//			| - > Returns 1 upon success or 0 upon failure
-//
-int 		StartsWith(String *s, const char *data);
-
-//
-//			| - > Check if the current string ends with the string provided
-//			| - > Returns 1 upon success or 0 upon failure
-//
-int 		EndsWith(String *s, const char *data);
-
-//
 //			| - > Find a substr in the current string
 //			| - > Return the substr position or -1 upon failures
 //
