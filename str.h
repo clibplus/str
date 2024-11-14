@@ -16,6 +16,8 @@ typedef struct String {
 	int 		(*StripFrom2End)(struct String *s, int idx);
 
 	/* String Checking Operation */
+	int 		(*Is)			(struct String *s, const char *data);
+	int 		(*Contains)		(struct String *s, const char *data);
 	int			(*isEmpty)		(struct String *s); 										// Checks if string is empty
 	int			(*isNumber)		(struct String *s);											// Checks if string is a number
 	int			(*IsUppercase)	(struct String *s);											// Checks if string is all uppercase
@@ -131,6 +133,18 @@ int 		String__StripPos2End(String *s, int idx);
 //			| - > Returns 1 upon success or 0 on failure
 //
 int	 		String__IsEmpty(String *s);
+
+//
+//			| - > Check if string matches the string provided
+//			| - > Returns >1 upon success or 0 upon failure
+//
+int 		String__Is(String *s, const char *data);
+
+//
+//			| - > Check if the current string contains a substr
+//			| - > Returns >1 upon success or 0 upon failure
+//
+int 		String__Contains(String *s, const char *data);
 
 //
 //			| - > Check if a string is a number

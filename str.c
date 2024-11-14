@@ -30,6 +30,8 @@ String ConstructMethods(String *s) {
 	s->Strip			= String__Strip;
 	s->StripFrom2End 	= String__StripPos2End;
 
+	s->Is 				= String__Is,
+	s->Contains			= String__Contains,
 	s->isEmpty			= String__IsEmpty;
 	s->isNumber			= String__isNumber;
 	s->AppendStr 		= String__AppendStr;
@@ -226,6 +228,20 @@ int String__isNumber(String *s) {
 			return 0;
 
 	return 1;
+}
+
+int String__Is(String *s, const char *data) {
+	if(!s || !data)
+		return 0;
+
+	return (!strcmp(s->data, data));
+}
+
+int String__Contains(String *s, const char *data) {
+	if(!s || !data)
+		return 0;
+
+	return (strstr(s->data, data) != 0 ? 1 : 0);
 }
 
 int StartsWith(String *s, const char *data) {
