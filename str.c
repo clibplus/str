@@ -50,6 +50,7 @@ String ConstructMethods(String *s) {
 	s->EndsWith 		= String__EndsWith;
 	s->Split			= String__Split;
 	s->SplitAlt			= String__SplitAlt;
+	s->RmSubstr 		= String__RemoveSubstr;
 	s->Destruct			= DestroyString;
 
 	return *s;
