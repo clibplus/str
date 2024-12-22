@@ -56,6 +56,19 @@ String ConstructMethods(String *s) {
 	return *s;
 }
 
+int String__Clear(String *s) {
+	if(!s || !s->data)
+		return 0;
+
+	if(s->data)
+		free(s->data);
+
+	s->data = (char *)malloc(1);
+	s->idx = 0;
+
+	return 1;
+}
+
 int String__FindChar(String *s, const char ch) {
 	if(!s || !s->data)
 		return -1;
