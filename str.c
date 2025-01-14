@@ -63,7 +63,7 @@ String ConstructMethods(String *s) {
 
 String *String__Set(String *s, const char *data) {
 	if(!s || !data)
-		return ((String){});
+		return NULL;
 
 	String__Clear(s);
 	String__AppendString(s, data);
