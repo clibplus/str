@@ -17,6 +17,8 @@ typedef struct String {
 
 	/* String Checking Operation */
 	int 		(*Clear)		(struct String *s);											// Clear the current string
+	int 		(*InsertAtIdx) 	(struct String *s, int pos, char new_ch);											// Insert a char at a string's position
+	int 		(*InsertAfterCh)(struct String *s, char find_ch, char new_ch);											// Insert a char after a char's position in the current string
 	int 		(*Is)			(struct String *s, const char *data);						// Compare the current string with a substr
 	int 		(*Contains)		(struct String *s, const char *data);						// Check if the current string contains a substr
 	int			(*isEmpty)		(struct String *s); 										// Checks if string is empty
@@ -56,6 +58,18 @@ String		NewString(const char *p);
 //			| - > Returns 1 upon success or 0 upon failure
 //
 int 		String__Clear(String *s);
+
+//
+//
+//
+//
+int 		String__InsertCharAtIdx(String *s, int pos, char replacement);
+
+//
+//
+//
+//
+int 		String__InsertCharAt(String *s, char find_ch, char replacement);
 
 //
 //			| - > Find a char's position in string

@@ -30,8 +30,11 @@ String ConstructMethods(String *s) {
 	s->Strip			= String__Strip;
 	s->StripFrom2End 	= String__StripPos2End;
 
-	s->Is 				= String__Is,
-	s->Contains			= String__Contains,
+	s->Clear			= String__Clear;
+	s->InsertAtIdx		= String__InsertCharAtIdx;
+	s->InsertAfterCh 	= String__InsertCharAt;
+	s->Is 				= String__Is;
+	s->Contains			= String__Contains;
 	s->isEmpty			= String__IsEmpty;
 	s->isNumber			= String__isNumber;
 	s->AppendStr 		= String__AppendStr;
@@ -68,6 +71,75 @@ int String__Clear(String *s) {
 
 	return 1;
 }
+
+int String__InsertCharAtIdx(String *s, int pos, char new_ch) {
+	if(!s || !s->data) 
+		return 0;
+
+	char *BUFF = (char *)malloc(s->idx - 1);
+	int idx = 0;
+
+	for(int i = 0; i < s->idx; i++) {
+		BUFF[idx] = s->data[i];
+		idx++;
+		BUFF = (char *)realloc(BUFF, idx + 1);
+
+		
+		if(i == pos) {
+			BUFF[idx] = new_ch;
+			idx++;
+			BUFF = (char *)realloc(BUFF, idx + 1);
+		}
+	}
+
+	free(s->data);
+	s->data = BUFF;
+	s->idx = idx;
+
+	return 1;
+}
+
+int String__InsertCharAt(String *s, char find_ch, char new_ch) {
+	if(!s || !s->data) 
+		return 0;
+
+	char *BUFF = (char *)malloc(1);
+	int idx = 0;
+
+	for(int i = 0; i < s->idx; i++) {
+		BUFF[idx] = s->data[i];
+		idx++;
+		BUFF = (char *)realloc(BUFF, idx + 1);
+
+		if(s->data[i] == find_ch) {
+			BUFF[idx] = new_ch;
+			idx++;
+			BUFF = (char *)realloc(BUFF, idx + 1);
+		}
+	}
+
+	free(s->data);
+	s->data = BUFF;
+	s->idx = idx;
+
+	return 1;
+}
+
+// int String__InsertAt(String *s, int pos, char *data) {
+// 	if(!s || !s->data || !data)
+// 		return 0;
+
+// 	char *BUFF = (char *)malloc(1);
+// 	int idx = 0;
+
+// 	for(int i = 0; i < s->data; i++) {
+// 		if(i == pos) {
+// 			strncat(BUFF, )
+// 		}
+// 	}
+
+// 	return 1;
+// }
 
 int String__FindChar(String *s, const char ch) {
 	if(!s || !s->data)
@@ -144,7 +216,7 @@ int String__Trim(String *s, const char ch) {
 	new[idx] = '\0';
 	free(s->data);
 	s->data = new;
-	s->idx = strlen(new);
+	s->idx = idx;
 
 	return found;
 }
@@ -486,7 +558,7 @@ int String__Replace(String *s, const char *find, const char *replace) {
 
 	while(end != -1) {
 		end = String__FindStringAt(s, find, idx);
-		char *substr = String__GetSubstr(s, start, (end == -1 ? (int)(s->idx - strlen(find) - 1) : end) );
+		char *substr = String__GetSubstr(s == -1 ? 0 : s, start, (end == -1 ? (int)(s->idx) : end) );
 
 		idx += strlen(substr) + strlen(replace);
 		new = (char *)realloc(new, idx);
