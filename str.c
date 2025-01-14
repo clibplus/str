@@ -63,10 +63,14 @@ int String__Clear(String *s) {
 	if(!s || !s->data)
 		return 0;
 
-	if(s->data)
+	if(s->data) {
+		/* Since freeing doesn't clear the data, memset is needed! */
+		memset(s->data, '\0', s->idx);
 		free(s->data);
+	}
 
 	s->data = (char *)malloc(1);
+	memset(s->data, '\0', 1);
 	s->idx = 0;
 
 	return 1;
@@ -455,7 +459,7 @@ int String__AppendInt(String *s, int num) {
 	char *BUFF = (char *)malloc(100);
 	memset(BUFF, '\0', 100);
 	
-	sprintf(BUFF, "%d\0", num);
+	sprintf(BUFF, "%d", num);
 
 	String__AppendString(s, BUFF);
 	free(BUFF);
