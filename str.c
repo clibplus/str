@@ -22,6 +22,8 @@ String NewString(const char *p) {
 }
 
 String ConstructMethods(String *s) {
+	s->Set 				= String__Set;
+	s->Get				= String__Get;
 	s->FindChar			= String__FindChar;
 	s->FindCharAt		= String__FindCharAt;
 	s->CountChar		= String__CountChar;
@@ -62,7 +64,12 @@ String ConstructMethods(String *s) {
 String String__Set(String *s, const char *data) {
 	if(!s || !data)
 		return ((String){});
+
+	s->Destruct(&s);
+	return NewString(data);
 }
+
+char *String__Get(String *s) { if(!s) return 0; return s->data; }
 
 int String__Clear(String *s) {
 	if(!s || !s->data)
