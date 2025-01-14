@@ -65,7 +65,7 @@ int 		String__Clear(String *s);
 //
 //
 //
-String 		String__Set(String *s, const char *data);
+String 		*String__Set(String *s, const char *data);
 
 //
 //
