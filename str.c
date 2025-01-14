@@ -65,8 +65,8 @@ String String__Set(String *s, const char *data) {
 	if(!s || !data)
 		return ((String){});
 
-	s->Clear(s);
-	s->AppendString(s, data);
+	String__Clear(s);
+	String__AppendString(s, data);
 	return s;
 }
 
