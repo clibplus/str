@@ -65,7 +65,7 @@ String String__Set(String *s, const char *data) {
 	if(!s || !data)
 		return ((String){});
 
-	s->Destruct(&s);
+	s->Destruct(s);
 	return NewString(data);
 }
 
