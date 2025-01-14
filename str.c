@@ -466,7 +466,7 @@ int String__FindString(String *s, const char *data) {
 	if(!s || !s->data || !data)
 		return -1;
 
-	if((long)strlen(data) < s->idx)
+	if((long)strlen(data) > s->idx)
 		return -1;
 
 	for(int i = 0; i < s->idx; i++) {
