@@ -61,7 +61,7 @@ String ConstructMethods(String *s) {
 	return *s;
 }
 
-String String__Set(String *s, const char *data) {
+String *String__Set(String *s, const char *data) {
 	if(!s || !data)
 		return ((String){});
 
