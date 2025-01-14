@@ -65,6 +65,18 @@ int 		String__Clear(String *s);
 //
 //
 //
+String 		String__Set(String *s, const char *data);
+
+//
+//
+//
+//
+char 		*String__Get(String *s);
+
+//
+//
+//
+//
 int 		String__InsertCharAtIdx(String *s, int pos, char replacement);
 
 //
