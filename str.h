@@ -4,7 +4,8 @@ typedef struct String {
 	char 		*data;
 	long 		idx;
 
-	String 		(*Set) 			(struct String *s, const char *data);
+	void 		(*Set) 			(struct String *s, const char *data);
+	char 		*(*Get)			(struct String *s);
 	/* Char Checking Operations */
 	int 		(*FindChar)		(struct String *s, const char ch);							// Find a char in string
 	int 		(*FindCharAt)	(struct String *s, const char ch, int match_count);			// Find a char in string at the matching match count position

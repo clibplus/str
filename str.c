@@ -59,6 +59,11 @@ String ConstructMethods(String *s) {
 	return *s;
 }
 
+String String__Set(String *s, const char *data) {
+	if(!s || !data)
+		return ((String){});
+}
+
 int String__Clear(String *s) {
 	if(!s || !s->data)
 		return 0;
