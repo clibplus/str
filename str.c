@@ -269,6 +269,17 @@ int String__TrimAt(String *s, int pos) {
 	return found;
 }
 
+int String__IsASCII(String *s) {
+	if(!s || !s->data)
+		return 0;
+
+	for(int i = 0; s->data[i] != '\0'; i++)
+    	if((s->data[i] < 'A' || s->data[i] > 'Z') && s->data[i] != 10)
+			return 0;
+
+	return 1;
+}
+
 int String__Strip(String *s) {
 	if(!s || !s->data) return 0;
 
@@ -318,7 +329,7 @@ int String__IsEmpty(String *s) {
 		return 0;
 
 	for(int i = 0; i < s->idx; i++) {
-		if(!isdigit(s->data[i]))
+		if(ascii(s->data[i]) && s->data[i] != 10)
 			return 0;
 	}
 

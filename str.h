@@ -152,6 +152,12 @@ int 		String__AppendArray(String *s, const char **data);
 int 		String__AppendInt(String *s, int num);
 
 //
+//
+//
+//
+int 		String__IsASCII(String *s);
+
+//
 //			| - > Strip the whitespaces in a string
 //			| - > Returns 1 upon success or 0 upon failures
 //
