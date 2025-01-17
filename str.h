@@ -31,6 +31,7 @@ typedef struct String {
 	int			(*EndsWith)		(struct String *s, const char *data);						// Checks if string ends with a substring
 	int			(*FindString)	(struct String *s, const char *data);						// Checks if string contains a substring
 	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);				// Checks if string contains a substring matching the match count position provided
+	int 		(*IsASCII) 		(struct String *s);
 
 	/* String Getters */
 	char		*(*GetSubstr)	(struct String *s, int start, int end);						// Get a substring from start to end position in the string

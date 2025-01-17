@@ -46,6 +46,7 @@ String ConstructMethods(String *s) {
 	s->AppendiArray		= String__AppendIntArray;
 	s->FindString 		= String__FindString;
 	s->FindStringAt		= String__FindStringAt;
+	s->IsASCII			= String__IsASCII;
 	s->GetSubstr		= String__GetSubstr;
 	s->Join				= String__Join;
 	s->Replace			= String__Replace;
@@ -281,29 +282,20 @@ int String__IsASCII(String *s) {
 }
 
 int String__Strip(String *s) {
-	if(!s || !s->data) return 0;
-
-	int start = 0;
-	while(isspace(s->data[start])) start++;
-
-	int end = strlen(s->data) - 1;
-	while(isspace(s->data[end])) end--;
-
-	int new_len = end - start + 2;
-	char *new = (char *)malloc(new_len);
-	if(!new)
+	if(!s || !s->data)
 		return 0;
 
-	memset(new, '\0', new_len);
-	for(int i = 0; i < new_len; i++)
-		new[i] = s->data[start + i];
+	char *BUFF = (char *)malloc(1);
+	int idx = 0;
+	for(int i = 0; i < s->idx; i++) {
+		if(s->data[i] == ' ' || s->data[i] == '\t')
+			continue;
 
-
-	new[strlen(new) - 1] = '\0';
-	free(s->data);
-	s->data = strdup(new);
-	s->idx = strlen(new);
-
+		BUFF[idx] = s->data[i];
+		idx++;
+		BUFF = (char *)realloc(BUFF, idx + 1);
+	}
+	
 	return 1;
 }
 
