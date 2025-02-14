@@ -321,7 +321,7 @@ int String__IsEmpty(String *s) {
 		return 0;
 
 	for(int i = 0; i < s->idx; i++) {
-		if(ascii(s->data[i]) && s->data[i] != 10)
+		if((s->data[i] > 'A' && s->data[i] < 'Z' || s->data[i] > 'a' && s->data[i] < 'z') && s->data[i] != 10)
 			return 0;
 	}
 
