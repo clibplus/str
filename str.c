@@ -531,12 +531,13 @@ char *String__GetSubstr(String *s, int start, int end) {
 	memset(new, '\0', new_len);
 	int idx = 0;
 
-	for(int i = 0; i < s->idx; i++)
+	for(int i = 0; i < s->idx; i++) {
 		if(i >= start && i < end) {
 			strncat(new, &s->data[i], sizeof(char));
 			idx++;
 		}
-
+	}
+	
 	new[strlen(new)] = '\0';
 	return (strlen(new) > 0 ? new : NULL);
 }
@@ -572,27 +573,28 @@ int String__Replace(String *s, const char *find, const char *replace) {
 	if(!s || !s->data || !find || !replace)
 		return 0;
 
-	int start = String__FindStringAt(s, find, 0) == -1 ? 0 : 0;
-	int end = 0, idx = 1;
-	char *new = (char *)malloc(1);
+	String new_str = NewString(NULL);
+	int start = (String__FindStringAt(s, find, 0) == -1 ? 0 : 0), end = 0, idx = 1;
 
-	while(end != -1) {
-		end = String__FindStringAt(s, find, idx);
-		char *substr = String__GetSubstr(s == -1 ? 0 : s, start, (end == -1 ? (int)(s->idx) : end) );
+	while ((end = String__FindStringAt(s, find, idx)) != -1) {
+		char *substr = String__GetSubstr(s, start, (end == -1 ? (int)(s->idx) : end));
+		String__AppendString(&new_str, substr);
 
-		idx += strlen(substr) + strlen(replace);
-		new = (char *)realloc(new, idx);
-
-		strncat(new, substr, strlen(substr));
-		strncat(new, replace, strlen(replace));
+		if(!substr)
+			break;
+		String__AppendString(&new_str, replace);
 
 		free(substr);
 		start = end + strlen(find);
 	}
+	
+	char *substr = String__GetSubstr(s, start, s->idx);
+	String__AppendString(&new_str, substr);
+	free(substr);
 
 	free(s->data);
-	s->data = new;
-	s->idx = strlen(new);
+	s->data = new_str.data;
+	s->idx = new_str.idx;
 
 	return 1;
 }
