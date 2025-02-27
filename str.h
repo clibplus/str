@@ -4,6 +4,8 @@ typedef struct String {
 	char 		*data;
 	long 		idx;
 
+	void 		(*Set) 			(struct String *s, const char *data);
+	char 		*(*Get)			(struct String *s);
 	/* Char Checking Operations */
 	int 		(*FindChar)		(struct String *s, const char ch);							// Find a char in string
 	int 		(*FindCharAt)	(struct String *s, const char ch, int match_count);			// Find a char in string at the matching match count position
@@ -16,6 +18,11 @@ typedef struct String {
 	int 		(*StripFrom2End)(struct String *s, int idx);
 
 	/* String Checking Operation */
+	int 		(*Clear)		(struct String *s);											// Clear the current string
+	int 		(*InsertAtIdx) 	(struct String *s, int pos, char new_ch);											// Insert a char at a string's position
+	int 		(*InsertAfterCh)(struct String *s, char find_ch, char new_ch);											// Insert a char after a char's position in the current string
+	int 		(*Is)			(struct String *s, const char *data);						// Compare the current string with a substr
+	int 		(*Contains)		(struct String *s, const char *data);						// Check if the current string contains a substr
 	int			(*isEmpty)		(struct String *s); 										// Checks if string is empty
 	int			(*isNumber)		(struct String *s);											// Checks if string is a number
 	int			(*IsUppercase)	(struct String *s);											// Checks if string is all uppercase
@@ -24,6 +31,7 @@ typedef struct String {
 	int			(*EndsWith)		(struct String *s, const char *data);						// Checks if string ends with a substring
 	int			(*FindString)	(struct String *s, const char *data);						// Checks if string contains a substring
 	int 		(*FindStringAt)	(struct String *s, const char *data, int idx);				// Checks if string contains a substring matching the match count position provided
+	int 		(*IsASCII) 		(struct String *s);
 
 	/* String Getters */
 	char		*(*GetSubstr)	(struct String *s, int start, int end);						// Get a substring from start to end position in the string
@@ -47,6 +55,36 @@ typedef struct String {
 //			| - > Returns the new instanse upon success or NULL upon failures
 //
 String		NewString(const char *p);
+
+//
+//			| - > Clear string
+//			| - > Returns 1 upon success or 0 upon failure
+//
+int 		String__Clear(String *s);
+
+//
+//
+//
+//
+String 		*String__Set(String *s, const char *data);
+
+//
+//
+//
+//
+char 		*String__Get(String *s);
+
+//
+//
+//
+//
+int 		String__InsertCharAtIdx(String *s, int pos, char replacement);
+
+//
+//
+//
+//
+int 		String__InsertCharAt(String *s, char find_ch, char replacement);
 
 //
 //			| - > Find a char's position in string
@@ -115,6 +153,12 @@ int 		String__AppendArray(String *s, const char **data);
 int 		String__AppendInt(String *s, int num);
 
 //
+//
+//
+//
+int 		String__IsASCII(String *s);
+
+//
 //			| - > Strip the whitespaces in a string
 //			| - > Returns 1 upon success or 0 upon failures
 //
@@ -133,22 +177,22 @@ int 		String__StripPos2End(String *s, int idx);
 int	 		String__IsEmpty(String *s);
 
 //
+//			| - > Check if string matches the string provided
+//			| - > Returns >1 upon success or 0 upon failure
+//
+int 		String__Is(String *s, const char *data);
+
+//
+//			| - > Check if the current string contains a substr
+//			| - > Returns >1 upon success or 0 upon failure
+//
+int 		String__Contains(String *s, const char *data);
+
+//
 //			| - > Check if a string is a number
 //			| - > Returns 1 upon success or 0 upon failure
 //
 int 		String__isNumber(String *s);
-
-//
-//			| - > Check if the current string starts with the string provided
-//			| - > Returns 1 upon success or 0 upon failure
-//
-int 		StartsWith(String *s, const char *data);
-
-//
-//			| - > Check if the current string ends with the string provided
-//			| - > Returns 1 upon success or 0 upon failure
-//
-int 		EndsWith(String *s, const char *data);
 
 //
 //			| - > Find a substr in the current string
@@ -227,3 +271,14 @@ int 		String__IsUppercase(String *s);
 //			| - > Destruct the String struct
 //
 int 		DestroyString(String *s);
+
+// == [ utils.c ] ==
+// Some external useful char * functions
+
+//
+//			| - > Construct an array using a hardcoded array ending with NULL for string [HEAP]
+//			| - > Returns the string on success or NULL upon failure
+//
+char 		*CreateString(char **arr);
+
+char 		*iString(int i);
