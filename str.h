@@ -1,5 +1,15 @@
 #pragma once
 
+typedef enum STR_UTILS {
+	STR_APPEND 		= 5429,
+	C_ARRAY_APPEND	= 5430,
+	I_ARRAY_APPEND  = 5431,
+	F_ARRAY_APPEND	= 5432,
+	INT_APPEND 		= 5433,
+	FLOAT_APPEND 	= 5434,
+	FLOAT_REMOVE	= 5435
+} STR_UTILS;
+
 typedef struct String {
 	char 		*data;
 	long 		idx;
@@ -47,6 +57,8 @@ typedef struct String {
 	int			(*RmSubstr)		(struct String *s, int start, int end);						// Remove a substring from the current string
 	int			(*Join)			(struct String *s, const char **arr, const char delim);		// Append an array of elements to the current string
 	int			(*Replace)		(struct String *s, const char *find, const char *replace);	// Replace a substring in string with a new string
+
+	int  		(*Utils)		(struct String *s, const void **arr);						// Takes a 2 dimensional array [ADVANCE FUNCTION]
 	int			(*Destruct)		(struct String *s);											// Destruct the string structure
 } String;
 
@@ -281,4 +293,14 @@ int 		DestroyString(String *s);
 //
 char 		*CreateString(char **arr);
 
+//
+//			| - > Convert an int to a string
+//			| - > Returns a memory allocated string upon success or NULL upon failure
+//
 char 		*iString(int i);
+
+//
+//			| - > An advance multi-functional method
+//			| - > Returns 1 upon success or 0 upon failure for the task unit provided
+//
+int 		String__Utils(String *s, const void **arr);

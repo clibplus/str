@@ -57,6 +57,8 @@ String ConstructMethods(String *s) {
 	s->Split			= String__Split;
 	s->SplitAlt			= String__SplitAlt;
 	s->RmSubstr 		= String__RemoveSubstr;
+
+	s->Utils 			= String__Utils;
 	s->Destruct			= DestroyString;
 
 	return *s;
@@ -265,7 +267,7 @@ int String__TrimAt(String *s, int pos) {
 	new[idx] = '\0';
 	free(s->data);
 	s->data = new;
-	s->idx = strlen(new);
+	s->idx = idx;
 
 	return found;
 }
@@ -582,6 +584,7 @@ int String__Replace(String *s, const char *find, const char *replace) {
 
 		if(!substr)
 			break;
+
 		String__AppendString(&new_str, replace);
 
 		free(substr);
@@ -593,6 +596,7 @@ int String__Replace(String *s, const char *find, const char *replace) {
 	free(substr);
 
 	free(s->data);
+	new_str.data[new_str.idx] = '\0';
 	s->data = new_str.data;
 	s->idx = new_str.idx;
 
