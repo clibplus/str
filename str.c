@@ -403,7 +403,8 @@ int String__ReplaceChar(String *s, const char ch, const char *data) {
 			break;
 
 		if(s->data[i] == ch) {
-			for(int chr = 0; chr < (int)strlen(data); chr++) {
+			int len = strlen(data);
+			for(int chr = 0; chr < len; chr++) {
 				new[idx] = data[chr];
 				idx++;
 				if((i + chr) > s->idx)
