@@ -12,16 +12,16 @@ int String__Utils(String *s, const void **arr) {
         switch((STR_UTILS)((void **)arr[i])[0]) {
             case STR_APPEND:
                 String__AppendString(s, ((char *)((void **)arr[i])[1]));
-                break;
+                continue;
             case C_ARRAY_APPEND:
                 String__AppendArray(s, ((const char **)((void **)arr[i])[1]));
-                break;
+                continue;
             case INT_APPEND:
                 String__AppendInt(s, ((int)((void **)arr[i])[1]));
-                break;
+                continue;
             case I_ARRAY_APPEND:
                 String__AppendIntArray(s, ((int *)((void **)arr[i])[1]));
-                break;
+                continue;
         }
     }
 
@@ -29,17 +29,21 @@ int String__Utils(String *s, const void **arr) {
 }
 
 char *CreateString(char **arr) {
-    char *buff = (char *)malloc(1);
-    int len = 0;
+    String n = NewString(NULL);
 
-    for(int i = 0; arr[i] != NULL; i++)
-    {
-        len += strlen(arr[i]);
-        buff = realloc(buff, len + 1);
-        strncat(buff, arr[i], strlen(arr[i]));
+    for(int i = 0; arr[i] != NULL; i++) {
+        n.AppendString(&n, arr[i]);
+    }
+    n.data[n.idx] = '\0';
+
+    if(n.idx > 0) {
+        char *resp = strdup(n.data);
+        n.Destruct(&n);
+        return resp;
     }
 
-    return buff;
+    n.Destruct(&n);
+    return NULL;
 }
 
 char *iString(int i) {
@@ -48,4 +52,13 @@ char *iString(int i) {
 
     buff[strlen(buff)] = '\0';
     return buff;
+}
+
+void free_many_strs(void **ptrs, int farr) {
+    for(int i = 0; ptrs[i] != NULL; i++) {
+        free(ptrs[i]);
+        ptrs[i] = NULL;
+    }
+
+    if(farr) free(ptrs);
 }

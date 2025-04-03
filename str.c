@@ -7,6 +7,15 @@
 
 String ConstructMethods(String *s);
 
+String NewStringAlt(const char **arr) {
+	String n = NewString(NULL);
+	for(int i = 1; arr[i] != NULL; i++) {
+		n.AppendString(&n, arr[i]);
+	}
+
+	return n;
+}
+
 String NewString(const char *p) {
 	if(!p)
 		return ConstructMethods(&(String){ .data = (char *)malloc(1), .idx = 0 });
@@ -407,9 +416,10 @@ int String__ReplaceChar(String *s, const char ch, const char *data) {
 			for(int chr = 0; chr < len; chr++) {
 				new[idx] = data[chr];
 				idx++;
-				if((i + chr) > s->idx)
+				if((i + chr) >= s->idx)
 					new = (char *)realloc(new, idx + 1);
 			}
+			continue;
 		}
 
 		new[idx] = s->data[i];
@@ -497,6 +507,8 @@ int String__FindString(String *s, const char *data) {
 			for(int ch = 0; ch < (int)strlen(data); ch++) {
 				if(s->data[i + ch] == data[ch] && ch == ((int)strlen(data)-1)) {
 					return i;
+				} else if(s->data[i + ch] != data[ch]) {
+					break;
 				}
 			}
 		}

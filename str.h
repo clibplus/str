@@ -304,3 +304,9 @@ char 		*iString(int i);
 //			| - > Returns 1 upon success or 0 upon failure for the task unit provided
 //
 int 		String__Utils(String *s, const void **arr);
+
+//
+//
+//
+//
+void 		free_many_strs(void **ptrs, int farr);
