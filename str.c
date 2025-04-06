@@ -21,7 +21,7 @@ String NewString(const char *p) {
 		return ConstructMethods(&(String){ .data = (char *)malloc(1), .idx = 0 });
 
 	String s = {
-		.data 			= (!p ? NULL : strdup(p)),
+		.data 			= (!p ? NULL : p),
 		.idx 			= (!p ? 0 : strlen(p)),
 	};
 
